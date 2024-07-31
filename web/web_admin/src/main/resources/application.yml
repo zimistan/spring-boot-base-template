@@ -1,0 +1,19 @@
+server:
+  port: 9000
+
+
+# Spring框架数据源配置
+spring:
+  datasource:
+    name: dressing
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL驱动类名
+    # 数据库连接URL
+    url: jdbc:mysql://localhost:3306/dressing?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root # 数据库用户名
+    password: 1234  # 数据库密码
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  mapper-locations: classpath:/mapper/*.xml
+#  type-aliases-package: com.adiljaan.entity
