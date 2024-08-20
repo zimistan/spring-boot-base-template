@@ -1,0 +1,86 @@
+server:
+  port: 9000
+  servlet:
+    context-path: /admin
+
+
+# Spring框架数据源配置
+spring:
+  datasource:
+    name: dressing
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL驱动类名
+    # 数据库连接URL
+    url: jdbc:mysql://localhost:3306/dressing?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root # 数据库用户名
+    password: 1234  # 数据库密码
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 123456
+      database: 0
+      # 连接超时时间
+      timeout: 5s
+      lettuce:
+        pool:
+          # 连接池最大连接数
+          max-active: 200
+          # 连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-wait: -1ms
+          # 连接池中的最大空闲连接
+          max-idle: 10
+          # 连接池中的最小空闲连接
+          min-idle: 0
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  mapper-locations: classpath:/mapper/*.xml
+#  type-aliases-package: com.adiljaan.entity
+
+############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
+sa-token:
+  # token 名称（同时也是 cookie 名称）
+  token-name: Authorization
+  # token 有效期（单位：秒） 默认30天，-1 代表永久有效
+  timeout: 1800
+  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+  active-timeout: -1
+  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
+  is-share: true
+  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+  token-style: random-64
+  # 是否输出操作日志
+  is-log: true
+  #  Token前缀
+  token-prefix: Token
+
+# 滑块验证码配置
+captcha:
+  # 如果项目中使用到了redis，滑块验证码会自动把验证码数据存到redis中， 这里配置redis的key的前缀,默认是captcha:slider
+  prefix: captcha
+  # 验证码过期时间，默认是2分钟,单位毫秒， 可以根据自身业务进行调整
+  expire:
+    # 默认缓存时间 2分钟
+    default: 10000
+    # 针对 点选验证码 过期时间设置为 2分钟， 因为点选验证码验证比较慢，把过期时间调整大一些
+    WORD_IMAGE_CLICK: 20000
+  # 使用加载系统自带的资源， 默认是 false(这里系统的默认资源包含 滑动验证码模板/旋转验证码模板,如果想使用系统的模板，这里设置为true)
+  init-default-resource: true
+  # 缓存控制， 默认为false不开启
+  local-cache-enabled: true
+  # 验证码会提前缓存一些生成好的验证数据， 默认是20
+  local-cache-size: 10
+  # 缓存拉取失败后等待时间 默认是 5秒钟
+  local-cache-wait-time: 5000
+  # 缓存检查间隔 默认是2秒钟
+  local-cache-period: 5000
+  secondary:
+    # 二次验证， 默认false 不开启
+    enabled: false
+    # 二次验证过期时间， 默认 2分钟
+    expire: 120000
+    # 二次验证缓存key前缀，默认是 captcha:secondary
+    keyPrefix: "captcha:secondary"
